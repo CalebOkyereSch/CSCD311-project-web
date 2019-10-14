@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const id = Math.floor(10600000 + ((10000 * Math.random()) + 1));
@@ -11,6 +12,7 @@ const student = require('../model/Student.js');
 router.get("/login",(req,res)=>{
     res.render('login');
 });
+
 
 //register page
 router.get("/register",(req,res)=>{
@@ -101,6 +103,7 @@ router.post('/register',(req,res)=>{
                         //saving user
                         newStudent.save()
                         .then(user =>{
+                            req.flash('success_msg',`You are registered and can now login with ${id}`);
                             res.redirect('/student/login');
                         })
                         .catch(err => console.log(err));
@@ -121,4 +124,12 @@ router.get("/dashboard",(req,res)=>{
 router.get("/halls",(req,res)=>{
     res.render('hallTable');
 })
+
+router.post("/login",(req,res,next)=>{
+    passport.authenticate('local',{
+    successRedirect:"/hallDashBoard",
+    failureRedirect:"/student/login",
+    failureFlash:true
+    })(req,res,next);
+});
 module.exports = router;
