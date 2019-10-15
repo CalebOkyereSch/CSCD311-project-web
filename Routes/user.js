@@ -117,12 +117,31 @@ router.post('/register',(req,res)=>{
 
 //dashbord for student
 router.get("/dashboard",(req,res)=>{
-    res.render('layout');
+    student.find({}).exec((err,student)=>{
+        if(err) throw err;
+         res.render('layout',{stud:student});
+
+    })
+   
 });
 
 //dashboard  halls
 router.get("/halls",(req,res)=>{
-    res.render('hallTable');
+    student.find({}).exec((err,student)=>{
+        if(err) throw err;
+         res.render('hallTable',{stud:student});
+
+    })
+   
+});
+
+router.post("/halls",(req,res)=>{
+    student.find({}).exec((err,student)=>{
+        if(err) throw err;
+         res.render('layout',{stud:student});
+
+    })
+   
 })
 
 router.post("/login",(req,res,next)=>{
