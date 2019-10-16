@@ -4,6 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const id = Math.floor(10600000 + ((10000 * Math.random()) + 1));
 let satisfy ;
+let auth = false;
+let identity ;
 
 //use model
 const student = require('../model/Student.js');
@@ -115,8 +117,8 @@ router.post('/register',(req,res)=>{
     }
 });
 
-//dashbord for student
-router.get("/dashboard",(req,res)=>{
+// dashbord for  all student and halls
+router.get("/dashboard",isLoggedIn,(req,res)=>{
     student.find({}).exec((err,student)=>{
         if(err) throw err;
          res.render('layout',{stud:student});
@@ -125,22 +127,28 @@ router.get("/dashboard",(req,res)=>{
    
 });
 
-//dashboard  halls
-router.get("/halls",(req,res)=>{
-    student.find({}).exec((err,student)=>{
-        if(err) throw err;
-         res.render('hallTable',{stud:student});
 
-    })
+//dashboard  selection of halls
+router.get("/halls",(req,res)=>{
+
+    student.findOne({id:identity})
+    .then( (Student) => {
+           if(Student){
+                 res.render('hallTable',{stud:Student});
+           }
+
+
+    // student.findOne({}).exec((err,student)=>{
+    //     if(err) throw err;
+    //      res.render('hallTable',{stud:student});
+
+    // });
    
+})
 });
 
 router.post("/halls",(req,res)=>{
-    student.find({}).exec((err,student)=>{
-        if(err) throw err;
-         res.render('layout',{stud:student});
 
-    })
    
 })
 
@@ -148,7 +156,24 @@ router.post("/login",(req,res,next)=>{
     passport.authenticate('local',{
     successRedirect:"/student/halls",
     failureRedirect:"/student/login",
-    failureFlash:true
+    failureFlash:true,
     })(req,res,next);
+    // to set auth to true;
+    auth=true;
+    identity=req.body.id;   
+   
 });
+
+
+// function to check if user is logged in
+function isLoggedIn(req, res, next) {
+    if (auth){
+        auth = false;
+      return next();
+    }
+    else{
+    res.redirect('/student/login');
+    }
+  }
+
 module.exports = router;

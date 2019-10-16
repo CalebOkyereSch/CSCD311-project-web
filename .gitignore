@@ -1,4 +1,1 @@
-views/layout.ejs
-views/hallTable.ejs
-views/hallDashboard.ejs
-
+node_modules
