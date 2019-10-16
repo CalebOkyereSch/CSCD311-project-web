@@ -1,52 +1,13 @@
 
 
-    <div class="form-row">
-        <div class="col">
-            <span class="label label-default">Othername</span>
-        <div class="col">
-            <%=stud.fname %>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col">
-            <span class="label label-default">Surname</span>
-        <div class="col">
-            <%=stud.lname %>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col">
-            <span class="label label-default">ID</span>
-        <div class="col">
-            <%=stud.id %>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col">
-            <span class="label label-default">Date Of Birth</span>
-        <div class="col">
-            <%=stud.dob %>
-        </div>
-      </div>
-      <!-- <div class="form-row">
-        <div class="col">
-            <span class="label label-default">Surname</span>
-        <div class="col">
-            <%=stud.lname %>
-        </div> -->
-      <!-- </div> -->
-      <div class="form-row">
-        <div class="col">
-            <span class="label label-primary">Email</span>
-        <div class="col">
-            <%=stud.email %>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col">
-            <span class="label label-primary">Hall Status</span>
-        <div class="col">
-            <%= %>
-        </div>
-      </div>
+    <ul class="nav nav-pills">
+
+        <li class="nav-link ">  <button class="btn btn-primary active">ID : </button> <button class="btn btn-primary-outline"> <%=stud.id %>  </span> </li> 
+        <li class="nav-link">  <button class="btn btn-primary">Othername : </button> <button class="btn btn-primary-outline"> <%=stud.fname %> </span>  </li>
+        <li class="nav-link">  <button class="btn btn-primary">Surname : </button> <button class="btn btn-primary-outline"> <%=stud.lname %>  </span> </li> 
+        <li class="nav-link">  <button class="btn btn-primary">Email : </button> <button class="btn btn-primary-outline"> <%=stud.email %>  </span> </li> 
+        
+        
+     
+    </ul>
 

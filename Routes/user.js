@@ -9,6 +9,8 @@ let identity ;
 
 //use model
 const student = require('../model/Student.js');
+const hall = require('../model/Hall.js');
+const room = require('../model/Room.js');
 
 //login page
 router.get("/login",(req,res)=>{
@@ -134,7 +136,7 @@ router.get("/halls",(req,res)=>{
     student.findOne({id:identity})
     .then( (Student) => {
            if(Student){
-                 res.render('hallTable',{stud:Student});
+                 res.render('hallTable',{stud:Student, halls:hall , rooms: room});
            }
 
 
