@@ -35,20 +35,16 @@ const StudentSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    hall:{
+        type: String,
+        required:true,
+    },
 
-    roomId:{
-        type: mongoose.Schema.ObjectId,
-        ref : 'Room'
+    room:{
+        type: String,
+        required:true,
     }
 });
-
-
-StudentSchema.virtual('room',{
-    ref:'Room',
-    localField:'roomId',
-    foreignField:'_id',
-    justOne:true
-})
 
 
 const Student = mongoose.model('Student',StudentSchema);

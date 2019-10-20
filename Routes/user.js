@@ -7,10 +7,12 @@ let satisfy ;
 let auth = false;
 let identity ;
 
+ 
+
+
 //use model
 const student = require('../model/Student.js');
-const hall = require('../model/Hall.js');
-const room = require('../model/Room.js');
+
 
 //login page
 router.get("/login",(req,res)=>{
@@ -25,7 +27,7 @@ router.get("/register",(req,res)=>{
 
 //handling register
 router.post('/register',(req,res)=>{
-  const {fname,lname,dob,gender,email,password,password2} =req.body; 
+  const {fname,lname,dob,gender,email,password,password2,hall,room} =req.body; 
     let errors = [];
     
     //checking for fields
@@ -96,7 +98,9 @@ router.post('/register',(req,res)=>{
                     dob,
                     gender,
                     email,
-                    password
+                    password,
+                    hall,
+                    room
                 });
                //hash password
                bcrypt.genSalt(10,(err,salt)=>
@@ -106,7 +110,7 @@ router.post('/register',(req,res)=>{
                         newStudent.password = hash;
                         //saving user
                         newStudent.save()
-                        .then(user =>{
+                        .then(student =>{
                             req.flash('success_msg',`You are registered and can now login with ${id}`);
                             res.redirect('/student/login');
                         })
@@ -129,40 +133,16 @@ router.get("/dashboard",isLoggedIn,(req,res)=>{
    
 });
 
-
-//dashboard  selection of halls
-router.get("/halls",(req,res)=>{
-
-    student.findOne({id:identity})
-    .then( (Student) => {
-           if(Student){
-                 res.render('hallTable',{stud:Student, halls:hall , rooms: room});
-           }
-
-
-    // student.findOne({}).exec((err,student)=>{
-    //     if(err) throw err;
-    //      res.render('hallTable',{stud:student});
-
-    // });
-   
-})
-});
-
-router.post("/halls",(req,res)=>{
-
-   
-})
-
+//handling post request
 router.post("/login",(req,res,next)=>{
     passport.authenticate('local',{
-    successRedirect:"/student/halls",
+    successRedirect:"/student/dashboard",
     failureRedirect:"/student/login",
     failureFlash:true,
     })(req,res,next);
     // to set auth to true;
     auth=true;
-    identity=req.body.id;   
+    identity = req.body.id;   
    
 });
 
